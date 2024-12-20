@@ -1,7 +1,0 @@
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/lib/libraylib.a
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/include/raylib.h
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/include/rlgl.h
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/include/raymath.h
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/lib/pkgconfig/raylib.pc
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/lib/cmake/raylib/raylib-config-version.cmake
-/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/lib/cmake/raylib/raylib-config.cmake
