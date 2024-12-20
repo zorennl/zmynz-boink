@@ -1,6 +1,6 @@
 import time
 
-a = open('/home/zmynz/vss/git-repo/zmynz-boink/python/assets/alphabet', 'r')
+a = open('assets/alphabet', 'r')
 alphabet = []
 
 for line in a:
