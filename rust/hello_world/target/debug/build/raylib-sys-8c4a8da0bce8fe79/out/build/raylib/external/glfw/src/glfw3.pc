@@ -1,0 +1,13 @@
+prefix=/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out
+exec_prefix=${prefix}
+includedir=/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/include
+libdir=/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/raylib-sys-8c4a8da0bce8fe79/out/lib
+
+Name: GLFW
+Description: A multi-platform library for OpenGL, window and input
+Version: 3.4.0
+URL: https://www.glfw.org/
+Requires.private: 
+Libs: -L${libdir} -lglfw3
+Libs.private:  -lrt -lm -ldl
+Cflags: -I${includedir}

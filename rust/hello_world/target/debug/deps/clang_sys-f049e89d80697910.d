@@ -1,0 +1,14 @@
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/deps/libclang_sys-f049e89d80697910.rmeta: /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/lib.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/support.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/link.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/macros.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/common.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/dynamic.rs
+
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/deps/libclang_sys-f049e89d80697910.rlib: /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/lib.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/support.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/link.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/macros.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/common.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/dynamic.rs
+
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/deps/clang_sys-f049e89d80697910.d: /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/lib.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/support.rs /home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/link.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/macros.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/common.rs /home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/dynamic.rs
+
+/home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/lib.rs:
+/home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/support.rs:
+/home/zmynz/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.8.1/src/link.rs:
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/macros.rs:
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/common.rs:
+/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out/dynamic.rs:
+
+# env-dep:OUT_DIR=/home/zmynz/vss/git-repo/zmynz-boink/rust/hello_world/target/debug/build/clang-sys-82e5badd0e317578/out
