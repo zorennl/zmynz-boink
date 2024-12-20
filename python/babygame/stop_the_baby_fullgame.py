@@ -2,6 +2,8 @@ from pyray import *
 from time import sleep
 import math
 
+
+fire = open('assets/fire.txt', 'r')
 screenWidth = 800
 screenHeight = 450
 rx = screenWidth
@@ -18,7 +20,6 @@ while not window_should_close():
     ry = int(200 + 25 * math.sin(rx / 40))
     draw_rectangle(0, 0, screenWidth, screenHeight, DARKGRAY)
     draw_rectangle(0, 150, screenWidth, 150, GRAY)
-    draw_text(bb, int(rx), ry, 50, LIME)
-    draw_text("FIRE", 20, 200, 1, RED)
+    draw_text(str(fire), 20, 200, 10, RED)
     end_drawing()
 close_window()
