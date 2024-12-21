@@ -19,8 +19,8 @@ while not window_should_close():
     rx -= 1
     if rx < -50:
         rx = screenWidth 
-    #draw_rectangle(rx, ry, 50, 50, RED)
-    draw_texture(snail, rx, ry, RED)
+    draw_rectangle(rx, ry, 50, 50, RED)
+    #draw_texture(snail, rx, ry, RED)
     draw_rectangle(0, 250, screenWidth, 225, GREEN)
     end_drawing()
 unload_texture(snail)
