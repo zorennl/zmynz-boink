@@ -49,6 +49,17 @@ def stats():
 
     #you.drawSides()
 
+def movement(acce;):
+    you.xVel += 16*(is_key_down(KEY_D)-is_key_down(KEY_A))
+    you.yVel += 2
+    if is_key_pressed(KEY_SPACE):
+        for platf in room_1:
+           if platf.isIn(you.bottom):
+            you.yVel = -24
+    you.xVel -= .8*you.xVel
+    you.x += you.xVel
+    you.y += you.yVel
+    you.setSides(1)
 winWidth = 1000
 winHeight = 1000
 
@@ -74,16 +85,7 @@ while not window_should_close():
 
 
 #KEYBOaRD
-    you.xVel += 16*(is_key_down(KEY_D)-is_key_down(KEY_A))
-    you.yVel += 2
-    if is_key_pressed(KEY_SPACE):
-        for platf in room_1:
-           if platf.isIn(you.bottom):
-            you.yVel = -24
-    you.xVel -= .8*you.xVel
-    you.x += you.xVel
-    you.y += you.yVel
-    you.setSides(1)
+    movement()
 
     if is_key_pressed(KEY_R):
         you.x = 50
@@ -100,11 +102,11 @@ while not window_should_close():
             you.yVel = 0
     for platf in room_1:
         if platf.isIn(you.right) and you.xVel > 0: #right walls
-            you.x = platf.y-50
+            you.x = platf.x-50
             you.xVel = 0
     for platf in room_1:
         if platf.isIn(you.left) and you.xVel < 0: #left walls
-            you.x = platf.y+platf.length
+            you.x = platf.x+platf.length
             you.xVel = 0
     for platf in room_1:
         platf.draw()
