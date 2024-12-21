@@ -3,6 +3,7 @@ from time import sleep
 import math
 import sys
 
+platform = sys.platform
 screenWidth = 800
 screenHeight = 450
 rx = screenWidth
@@ -12,8 +13,11 @@ push_timer = 0
 
 init_window(screenWidth, screenHeight, "Stop the baby v2")
 
-
-fire = load_texture('python/babygame/assets/fire_emoji.png')
+if platform == "win32":
+    firedir = 'python/babygame/assets/fire_emoji.png'
+else:
+    firedir = 'assets/fire_emoji.png'
+fire = load_texture(firedir)
 
 while not window_should_close():
     sleep(.004)
