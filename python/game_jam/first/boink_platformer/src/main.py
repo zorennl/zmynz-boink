@@ -3,18 +3,27 @@ from time import sleep
 
 
 class player:
-    def __init__(self, x, y, xVel, yVel):
+    def __init__(self, x, y, xVel, yVel, color = RED):
         self.x = x
         self.y = y
         self.xVel = xVel
         self.yVel = yVel
+        self.color = color
+        self.hitbox = platform(self.x+1,self.y+1,48,48,self.color)
+
     def setSides(self,dist):
         self.top = (self.x+25+dist,self.y+dist)
         self.bottom = (self.x+25+dist,self.y+50+dist)
         self.left = (self.x+dist,self.y+25+dist)
         self.right = (self.x+50+dist,self.y+25+dist)
+
+    def setHitbox(self):
+        self.hitbox.x = int(self.x+1)
+        self.hitbox.y = int(self.y+1)
+
     def draw(self):
-        draw_rectangle(int(self.x),int(self.y),50,50,RED)
+        draw_rectangle(int(self.x),int(self.y),50,50,self.color)
+
     def drawSides(self):
         draw_rectangle(int(self.top[0]),int(self.top[1]-4),4,4,ORANGE)
         draw_rectangle(int(self.bottom[0]),int(self.bottom[1]+4),4,4,ORANGE)
@@ -49,21 +58,47 @@ def stats():
 
     #you.drawSides()
 
-def movement(acce;):
-    you.xVel += 16*(is_key_down(KEY_D)-is_key_down(KEY_A))
-    you.yVel += 2
-    if is_key_pressed(KEY_SPACE):
+def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE],accel=16,grav=2,jumpStr=24):
+    player.xVel += accel*(is_key_down(keys[1])-is_key_down(keys[0]))
+    player.yVel += grav
+    if is_key_pressed(keys[2]):
         for platf in room_1:
-           if platf.isIn(you.bottom):
-            you.yVel = -24
-    you.xVel -= .8*you.xVel
-    you.x += you.xVel
-    you.y += you.yVel
-    you.setSides(1)
+           if platf.isIn(player.bottom):
+            player.yVel = -1*jumpStr
+    player.xVel -= .8*player.xVel
+    player.x += player.xVel
+    player.y += player.yVel
+    player.setSides(1)
+
+def collision(player):
+    player.setHitbox()
+    for platf in room_1:
+        if platf.isIn(player.bottom) and player.yVel > 0: #floor
+            player.y = platf.y-50
+            player.yVel = 0
+    for platf in room_1:
+        if platf.isIn(player.top) and player.yVel < 0: #ceiling
+            player.y = platf.y+platf.height
+            player.yVel = 0
+    for platf in room_1:
+        if platf.isIn(player.right) and player.xVel > .1: #right walls
+            player.x = platf.x-50
+            player.xVel = 0
+    for platf in room_1:
+        if platf.isIn(player.left) and player.xVel < -.1: #left walls
+            player.x = platf.x+platf.length
+            player.xVel = 0
+
+
 winWidth = 1000
 winHeight = 1000
 
-you = player(50,150,0,0)
+you = player(50,350,0,0)
+them = player(150,350,0,0,DARKBLUE)
+
+you.setHitbox()
+them.setHitbox()
+
 platform_1 = platform(0,400,350,100)
 platform_2 = platform(300,300,200,200,PINK)
 platform_3 = platform(400,600,500,200,BLUE)
@@ -76,7 +111,7 @@ scrBottom = platform(0,winHeight-5,5,winHeight,color=BLACK)
 screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 
-room_1 = [platform_1,platform_2,platform_3,platform_4] + screenWalls
+room_1 = [platform_1,platform_2,platform_3,platform_4] + screenWalls + [you.hitbox,them.hitbox]
 init_window(winWidth, winHeight, "platformer") #? INITIATE
 while not window_should_close():
     begin_drawing()
@@ -85,33 +120,27 @@ while not window_should_close():
 
 
 #KEYBOaRD
-    movement()
+    movement(you,keys=[KEY_A,KEY_D,KEY_W])
+    movement(them,keys=[KEY_LEFT,KEY_RIGHT,KEY_UP])
 
     if is_key_pressed(KEY_R):
         you.x = 50
-        you.y = 150
+        you.y = 50
         you.yVel = 0
-##COLISION
-    for platf in room_1:
-        if platf.isIn(you.bottom) and you.yVel > 0: #floor
-            you.y = platf.y-50
-            you.yVel = 0
-    for platf in room_1:
-        if platf.isIn(you.top) and you.yVel < 0: #ceiling
-            you.y = platf.y+platf.height
-            you.yVel = 0
-    for platf in room_1:
-        if platf.isIn(you.right) and you.xVel > 0: #right walls
-            you.x = platf.x-50
-            you.xVel = 0
-    for platf in room_1:
-        if platf.isIn(you.left) and you.xVel < 0: #left walls
-            you.x = platf.x+platf.length
-            you.xVel = 0
+        them.x = 150
+        them.y = 100
+        them.yVel = 0
+
+#COLLISON
+    collision(you)
+    collision(them)
+
     for platf in room_1:
         platf.draw()
 
     you.draw()
+    them.draw()
+
     stats()
     end_drawing()
 close_window()
