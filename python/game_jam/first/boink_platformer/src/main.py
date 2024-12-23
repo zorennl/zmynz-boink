@@ -81,11 +81,11 @@ def collision(player):
             player.y = platf.y+platf.height
             player.yVel = 0
     for platf in room_1:
-        if platf.isIn(player.right) and player.xVel > .1: #right walls
+        if platf.isIn(player.right): #right walls
             player.x = platf.x-50
             player.xVel = 0
     for platf in room_1:
-        if platf.isIn(player.left) and player.xVel < -.1: #left walls
+        if platf.isIn(player.left): #left walls
             player.x = platf.x+platf.length
             player.xVel = 0
 
@@ -95,6 +95,7 @@ winHeight = 1000
 
 you = player(50,350,0,0)
 them = player(150,350,0,0,DARKBLUE)
+third = player(250,350,0,0,DARKGREEN)
 
 you.setHitbox()
 them.setHitbox()
@@ -103,6 +104,8 @@ platform_1 = platform(0,400,350,100)
 platform_2 = platform(300,300,200,200,PINK)
 platform_3 = platform(400,600,500,200,BLUE)
 platform_4 = platform(550,900,450,100,YELLOW)
+platform_5 = platform(100,700,300,100,PURPLE)
+platform_6 = platform(200,600,120,100,SKYBLUE)
 
 scrLeft = platform(0,0,5,winHeight,color=BLACK)
 scrRight = platform(winWidth-5,0,5,winHeight,color=BLACK)
@@ -111,24 +114,22 @@ scrBottom = platform(0,winHeight-5,5,winHeight,color=BLACK)
 screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 
-room_1 = [platform_1,platform_2,platform_3,platform_4] + screenWalls + [you.hitbox,them.hitbox]
+room_1 = [platform_1,platform_2,platform_3,platform_4,platform_5,platform_6] + screenWalls + [you.hitbox,them.hitbox]
 init_window(winWidth, winHeight, "platformer") #? INITIATE
 while not window_should_close():
     begin_drawing()
     sleep(.02)
     clear_background(WHITE)
 
-
-#KEYBOaRD
     movement(you,keys=[KEY_A,KEY_D,KEY_W])
     movement(them,keys=[KEY_LEFT,KEY_RIGHT,KEY_UP])
 
     if is_key_pressed(KEY_R):
         you.x = 50
-        you.y = 50
+        you.y = 350
         you.yVel = 0
         them.x = 150
-        them.y = 100
+        them.y = 350
         them.yVel = 0
 
 #COLLISON
