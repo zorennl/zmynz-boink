@@ -13,15 +13,17 @@ while not window_should_close():
     my = get_mouse_y()
     middlex = mx - 8
     middley = my - 8
-    if is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-        draw_texture(dirt, middlex, middley, WHITE)
-    
+    dirtbox = Rectangle(mx, my, 16, 16)
+    dirtboxdest = Rectangle(mx, my, 160, 160)
+    origin = Vector2(0, 0)
+        
     begin_drawing()
     
-    # clear_background(BLACK)
+    clear_background(BLACK)
 
     # draw_circle(mx, my, 20, WHITE)
     draw_texture(dirt, 0, 0, WHITE)
+    draw_texture_pro(dirt, dirtbox, dirtboxdest, origin, 0, WHITE)
     
     end_drawing()
 unload_texture(dirt)
