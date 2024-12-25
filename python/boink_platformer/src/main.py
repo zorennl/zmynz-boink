@@ -3,17 +3,24 @@ from time import sleep
 
 
 class player:
-    def __init__(self, x, y, xVel, yVel, color = RED):
+    def __init__(self, x, y, xVel, yVel, color = RED, tags = []):
         self.x = x
         self.y = y
         self.xVel = xVel
         self.yVel = yVel
         self.color = color
         self.hitbox = platform(self.x+1,self.y+1,48,48,self.color)
+        self.tags = tags
+        self.movement = movementSettings()
+
 
     def setSides(self,dist):
-        self.top = (self.x+25+dist,self.y+dist)
-        self.bottom = (self.x+25+dist,self.y+50+dist)
+        self.top = [(self.x+5+dist,self.y+dist),
+        (self.x+25+dist,self.y+dist),
+        (self.x+45+dist,self.y+dist)]
+        self.bottom = [(self.x+5+dist,self.y+50+dist),
+        (self.x+25+dist,self.y+50+dist),
+        (self.x+45+dist,self.y+50+dist)]
         self.left = (self.x+dist,self.y+25+dist)
         self.right = (self.x+50+dist,self.y+25+dist)
 
@@ -24,11 +31,14 @@ class player:
     def draw(self):
         draw_rectangle(int(self.x),int(self.y),50,50,self.color)
 
-    def drawSides(self):
-        draw_rectangle(int(self.top[0]),int(self.top[1]-4),4,4,ORANGE)
-        draw_rectangle(int(self.bottom[0]),int(self.bottom[1]+4),4,4,ORANGE)
-        draw_rectangle(int(self.left[0]-4),int(self.left[1]),4,4,ORANGE)
-        draw_rectangle(int(self.right[0]+4),int(self.right[1]),4,4,ORANGE)
+class movementSettings:
+        def __init__(self, gravity=2, xAcceleration=16, jumpStrength=24, coyoteTime=5, jumps=1):
+            self.gravity = gravity
+            self.xAcceleration = xAcceleration
+            self.jumpStrength = jumpStrength
+            self.coyoteTime = coyoteTime
+            self.jumps = jumps
+            self.airTime = 0
 
 class platform:
     def __init__(self, x, y, length, height, color=GREEN):
@@ -56,46 +66,49 @@ def stats():
     draw_text(f'px: {round(you.x,3)}, py: {you.y}',10,40,20,BLACK)
     draw_text(f'xVel: {round(you.xVel,3)}, yVel: {you.yVel}', 10, 70, 20, BLACK)
 
-    #you.drawSides()
-
-def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE],accel=16,grav=2,jumpStr=24):
-    player.xVel += accel*(is_key_down(keys[1])-is_key_down(keys[0]))
-    player.yVel += grav
+def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
+    player.xVel += player.movement.xAcceleration*(is_key_down(keys[1])-is_key_down(keys[0]))
+    player.yVel += player.movement.gravity
     if is_key_pressed(keys[2]):
         for platf in room_1:
-           if platf.isIn(player.bottom):
-            player.yVel = -1*jumpStr
+            if player.movement.airTime <= player.movement.coyoteTime & (platf.isIn(player.top[0]) | platf.isIn(player.top[1]) | platf.isIn(player.top[2])):
+                player.yVel = -1*player.movement.jumpStrength
     player.xVel -= .8*player.xVel
     player.x += player.xVel
     player.y += player.yVel
     player.setSides(1)
+    player.movement.airTime += 1
 
 def collision(player):
     player.setHitbox()
-    for platf in room_1:
-        if platf.isIn(player.bottom) and player.yVel > 0: #floor
+    for platf in room_1: #floor
+        if platf.isIn(player.bottom[0]) | platf.isIn(player.bottom[1]) | platf.isIn(player.bottom[2]) and player.yVel > 0:
             player.y = platf.y-50
             player.yVel = 0
-    for platf in room_1:
-        if platf.isIn(player.top) and player.yVel < 0: #ceiling
+            player.movement.airTime = 0
+    for platf in room_1: #ceiling
+        if platf.isIn(player.top[0]) | platf.isIn(player.top[1]) | platf.isIn(player.top[2]) and player.yVel < 0:
             player.y = platf.y+platf.height
             player.yVel = 0
-    for platf in room_1:
-        if platf.isIn(player.right): #right walls
-            player.x = platf.x-50
-            player.xVel = 0
-    for platf in room_1:
-        if platf.isIn(player.left): #left walls
-            player.x = platf.x+platf.length
-            player.xVel = 0
+    if abs(player.yVel) < 50:
+        for platf in room_1: #right walls
+            if platf.isIn(player.right):
+                player.x = platf.x-50
+                player.xVel = 0
+        for platf in room_1: #left walls
+            if platf.isIn(player.left):
+                player.x = platf.x+platf.length
+                player.xVel = 0
 
 
 winWidth = 1000
-winHeight = 1000
+winHeight = 700
 
 you = player(50,350,0,0)
 them = player(150,350,0,0,DARKBLUE)
 third = player(250,350,0,0,DARKGREEN)
+
+print(you.movement)
 
 you.setHitbox()
 them.setHitbox()

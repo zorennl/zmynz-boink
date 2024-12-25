@@ -3,7 +3,7 @@ from sys import platform
 from time import sleep
 
 if platform == "win32":
-    spr = 'python/texture/assets/sprite.png'
+    spr = 'python\\texture\\assets\\sprite.png'
 else:
     spr = 'assets/sprite.png'
 
