@@ -2,7 +2,7 @@ from pyray import *
 from sys import platform
 
 if platform == "win32":
-    dirtraw = 'python\topdown-game\assets\dirt.png'
+    dirtraw = 'python\\topdown-game\\assets\\dirt.png'
 else:
     dirtraw = 'assets/dirt.png'
 
