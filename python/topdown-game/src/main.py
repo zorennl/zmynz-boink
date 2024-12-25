@@ -1,12 +1,19 @@
 from pyray import *
 from os.path import join 
 
+<<<<<<< HEAD
 dirtr = join('assets', 'dirt.png')
 playerr = join('assets', 'player.png')
 
 set_config_flags(FLAG_WINDOW_TRANSPARENT)
 
 playerpos = Vector2(400, 450)
+=======
+if platform == "win32":
+    dirtraw = 'python\\topdown-game\\assets\\dirt.png'
+else:
+    dirtraw = 'assets/dirt.png'
+>>>>>>> refs/remotes/origin/main
 
 init_window(800, 450, "Hello")
 
