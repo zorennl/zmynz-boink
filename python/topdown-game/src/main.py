@@ -1,6 +1,10 @@
 from pyray import *
+from sys import platform
 
-dirtraw = 'assets/dirt.png'
+if platform == "win32":
+    dirtraw = 'python\topdown-game\assets\dirt.png'
+else:
+    dirtraw = 'assets/dirt.png'
 
 init_window(800, 450, "Hello")
 
