@@ -60,9 +60,9 @@ while not window_should_close():
     begin_drawing()
    
     hide_cursor()
-    if is_key_pressed(KEY_F):
-        toggle_fullscreen()
-        toggle_borderless_windowed()
+    # if is_key_pressed(KEY_F):
+    #     toggle_fullscreen()
+    #     toggle_borderless_windowed()
         
     clear_background(BLANK)
 
