@@ -3,14 +3,13 @@ from time import sleep
 
 
 class player:
-    def __init__(self, x, y, xVel, yVel, color = RED, tags = []):
+    def __init__(self, x, y, xVel, yVel, color = RED):
         self.x = x
         self.y = y
         self.xVel = xVel
         self.yVel = yVel
         self.color = color
         self.hitbox = platform(self.x+1,self.y+1,48,48,self.color)
-        self.tags = tags
         self.movement = movementSettings()
 
 
@@ -41,12 +40,13 @@ class movementSettings:
             self.airTime = 0
 
 class platform:
-    def __init__(self, x, y, length, height, color=GREEN):
+    def __init__(self, x, y, length, height, color=GREEN, tags = {}):
         self.x = x
         self.y = y
         self.length = length
         self.height = height
         self.color = color
+        self.tags = tags
     def isIn(self,pos):
         x = int(pos[0])
         y = int(pos[1])
@@ -70,9 +70,8 @@ def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
     player.xVel += player.movement.xAcceleration*(is_key_down(keys[1])-is_key_down(keys[0]))
     player.yVel += player.movement.gravity
     if is_key_pressed(keys[2]):
-        for platf in room_1:
-            if player.movement.airTime <= player.movement.coyoteTime & (platf.isIn(player.top[0]) | platf.isIn(player.top[1]) | platf.isIn(player.top[2])):
-                player.yVel = -1*player.movement.jumpStrength
+        if player.movement.airTime <= player.movement.coyoteTime:
+            player.yVel = -1*player.movement.jumpStrength
     player.xVel -= .8*player.xVel
     player.x += player.xVel
     player.y += player.yVel
@@ -81,28 +80,31 @@ def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
 
 def collision(player):
     player.setHitbox()
-    for platf in room_1: #floor
+    for platf in room_1:
+#floor
         if platf.isIn(player.bottom[0]) | platf.isIn(player.bottom[1]) | platf.isIn(player.bottom[2]) and player.yVel > 0:
             player.y = platf.y-50
             player.yVel = 0
             player.movement.airTime = 0
-    for platf in room_1: #ceiling
+#ceiling
         if platf.isIn(player.top[0]) | platf.isIn(player.top[1]) | platf.isIn(player.top[2]) and player.yVel < 0:
             player.y = platf.y+platf.height
             player.yVel = 0
-    if abs(player.yVel) < 50:
-        for platf in room_1: #right walls
-            if platf.isIn(player.right):
-                player.x = platf.x-50
-                player.xVel = 0
-        for platf in room_1: #left walls
-            if platf.isIn(player.left):
-                player.x = platf.x+platf.length
-                player.xVel = 0
+    player.setHitbox()
+    player.setSides(1)
+    for platf in room_1: 
+#right walls
+        if platf.isIn(player.right):
+            player.x = platf.x-50
+            player.xVel = 0
+#left walls
+        if platf.isIn(player.left):
+            player.x = platf.x+platf.length
+            player.xVel = 0
 
 
 winWidth = 1000
-winHeight = 700
+winHeight = 1000
 
 you = player(50,350,0,0)
 them = player(150,350,0,0,DARKBLUE)
@@ -120,10 +122,10 @@ platform_4 = platform(550,900,450,100,YELLOW)
 platform_5 = platform(100,700,300,100,PURPLE)
 platform_6 = platform(200,600,120,100,SKYBLUE)
 
-scrLeft = platform(0,0,5,winHeight,color=BLACK)
-scrRight = platform(winWidth-5,0,5,winHeight,color=BLACK)
-scrTop = platform(0,0,winWidth,5,color=BLACK)
-scrBottom = platform(0,winHeight-5,5,winHeight,color=BLACK)
+scrLeft = platform(-45,0,50,winHeight,color=BLACK)
+scrRight = platform(winWidth-5,0,50,winHeight,color=BLACK)
+scrTop = platform(0,-45,winWidth,50,color=BLACK)
+scrBottom = platform(0,winHeight-5,winWidth,50,color=BLACK)
 screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 
