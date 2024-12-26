@@ -38,6 +38,7 @@ while not window_should_close():
     if is_mouse_button_pressed(MOUSE_BUTTON_LEFT): 
         for i in range(1, bul.time):
             bullet.drawbullet(bul)  
+            bulshape.y -= bul.velocity
     draw_texture(dirt, 0, 0, WHITE)
     draw_text(f'mx:{playerpos.x}, my:{playerpos.y}', 320, 0, 20, WHITE)
     draw_texture_ex(player, playerpos, 0, 10, WHITE)
