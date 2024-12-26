@@ -3,7 +3,7 @@ from os.path import join as os
 
 
 
-set_config_flags(4120)
+set_config_flags(4120+16384)
 
 mNum = get_current_monitor()
 
