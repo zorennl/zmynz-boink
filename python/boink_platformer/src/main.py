@@ -1,5 +1,4 @@
 from pyray import *
-from time import sleep
 
 
 class player:
@@ -9,7 +8,7 @@ class player:
         self.xVel = xVel
         self.yVel = yVel
         self.color = color
-        self.hitbox = platform(self.x+1,self.y+1,48,48,self.color)
+        self.hitbox = platform(self.x+1,self.y+1,48,48,GOLD)
         self.movement = movementSettings()
 
 
@@ -17,10 +16,13 @@ class player:
         self.top = [(self.x+5+dist,self.y+dist),
         (self.x+25+dist,self.y+dist),
         (self.x+45+dist,self.y+dist)]
+
         self.bottom = [(self.x+5+dist,self.y+50+dist),
         (self.x+25+dist,self.y+50+dist),
         (self.x+45+dist,self.y+50+dist)]
+
         self.left = (self.x+dist,self.y+25+dist)
+
         self.right = (self.x+50+dist,self.y+25+dist)
 
     def setHitbox(self):
@@ -31,7 +33,7 @@ class player:
         draw_rectangle(int(self.x),int(self.y),50,50,self.color)
 
 class movementSettings:
-        def __init__(self, gravity=2, xAcceleration=16, jumpStrength=24, coyoteTime=5, jumps=1):
+        def __init__(self, gravity=1, xAcceleration=10, jumpStrength=12, coyoteTime=5, jumps=1):
             self.gravity = gravity
             self.xAcceleration = xAcceleration
             self.jumpStrength = jumpStrength
@@ -69,13 +71,14 @@ def stats():
 def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
     player.xVel += player.movement.xAcceleration*(is_key_down(keys[1])-is_key_down(keys[0]))
     player.yVel += player.movement.gravity
-    if is_key_pressed(keys[2]):
-        if player.movement.airTime <= player.movement.coyoteTime:
+    if is_key_down(keys[2]):
+        if player.movement.airTime <= player.movement.coyoteTime:            
             player.yVel = -1*player.movement.jumpStrength
     player.xVel -= .8*player.xVel
     player.x += player.xVel
     player.y += player.yVel
     player.setSides(1)
+    #player.setHitbox() semifixes a problem come back later for it
     player.movement.airTime += 1
 
 def collision(player):
@@ -108,9 +111,6 @@ winHeight = 1000
 
 you = player(50,350,0,0)
 them = player(150,350,0,0,DARKBLUE)
-third = player(250,350,0,0,DARKGREEN)
-
-print(you.movement)
 
 you.setHitbox()
 them.setHitbox()
@@ -131,21 +131,18 @@ screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 room_1 = [platform_1,platform_2,platform_3,platform_4,platform_5,platform_6] + screenWalls + [you.hitbox,them.hitbox]
 init_window(winWidth, winHeight, "platformer") #? INITIATE
+set_target_fps(60)
+
 while not window_should_close():
     begin_drawing()
-    sleep(.02)
     clear_background(WHITE)
 
     movement(you,keys=[KEY_A,KEY_D,KEY_W])
     movement(them,keys=[KEY_LEFT,KEY_RIGHT,KEY_UP])
 
     if is_key_pressed(KEY_R):
-        you.x = 50
-        you.y = 350
-        you.yVel = 0
-        them.x = 150
-        them.y = 350
-        them.yVel = 0
+        you.x = 50; you.y = 350; you.yVel = 0
+        them.x = 150; them.y = 350; them.yVel = 0
 
 #COLLISON
     collision(you)
