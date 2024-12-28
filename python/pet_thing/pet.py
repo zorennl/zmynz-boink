@@ -6,6 +6,7 @@ from os.path import join as os
 
 set_config_flags(4120+16384)
 
+
 mNum = get_current_monitor()
 
 
@@ -33,10 +34,10 @@ while not window_should_close():
     begin_drawing()
     clear_background(BLANK)
     draw_texture(dog,0,0,WHITE)
-    draw_text(f"{x}",0,0,10,BLACK)
-    draw_text(f"{y}",30,0,10,BLACK)
-    draw_text(f"{direction}",60,0,10,BLACK)
-    draw_text(f"moveType: {state['moveType']}, timer: {state['timer']}",0,20,10,BLACK)
+    #draw_text(f"{x}",0,0,10,BLACK)
+    #draw_text(f"{y}",30,0,10,BLACK)
+    #draw_text(f"{direction}",60,0,10,BLACK)
+    #draw_text(f"moveType: {state['moveType']}, timer: {state['timer']}",0,20,10,BLACK)
 
     if state["timer"] == 0:
         if get_random_value(1,2) == 1:
@@ -65,10 +66,24 @@ while not window_should_close():
     y += 5*(is_key_down(KEY_S)-is_key_down(KEY_W))
 
         
-    if x > xMax-110: x = xMax-110
-    if x < 0: x = 0
-    if y > yMax-140: y = yMax-140
-    if y < 0: y = 0         
+    if x > xMax-110:
+        x = xMax-110
+        direction *= -1
+        state["timer"] = 0
+    if x < 0: 
+        x = 0
+        direction *= -1
+        state["timer"] = 0
+    if y > yMax-140: 
+        y = yMax-140
+        direction *= -1
+        direction += 180
+        state["timer"] = 0
+    if y < 0: 
+        y = 0
+        direction *= -1
+        direction += 180   
+        state["timer"] = 0   
 
     end_drawing()
 close_window()
