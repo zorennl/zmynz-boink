@@ -8,7 +8,7 @@ class player:
         self.xVel = xVel
         self.yVel = yVel
         self.color = color
-        self.hitbox = platform(self.x+1,self.y+1,48,48,GOLD)
+        self.hitbox = collisionBox(self.x+1,self.y+1,48,48,BLANK)
         self.movement = movementSettings()
 
 
@@ -41,7 +41,7 @@ class movementSettings:
             self.jumps = jumps
             self.airTime = 0
 
-class platform:
+class collisionBox:
     def __init__(self, x, y, length, height, color=GREEN, tags = {}):
         self.x = x
         self.y = y
@@ -78,7 +78,6 @@ def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
     player.x += player.xVel
     player.y += player.yVel
     player.setSides(1)
-    #player.setHitbox() semifixes a problem come back later for it
     player.movement.airTime += 1
 
 def collision(player):
@@ -115,17 +114,17 @@ them = player(150,350,0,0,DARKBLUE)
 you.setHitbox()
 them.setHitbox()
 
-platform_1 = platform(0,400,350,100)
-platform_2 = platform(300,300,200,200,PINK)
-platform_3 = platform(400,600,500,200,BLUE)
-platform_4 = platform(550,900,450,100,YELLOW)
-platform_5 = platform(100,700,300,100,PURPLE)
-platform_6 = platform(200,600,120,100,SKYBLUE)
+platform_1 = collisionBox(0,400,350,100)
+platform_2 = collisionBox(300,300,200,200,PINK)
+platform_3 = collisionBox(400,600,500,200,BLUE)
+platform_4 = collisionBox(550,900,450,100,YELLOW)
+platform_5 = collisionBox(100,700,300,100,PURPLE)
+platform_6 = collisionBox(200,600,120,100,SKYBLUE)
 
-scrLeft = platform(-45,0,50,winHeight,color=BLACK)
-scrRight = platform(winWidth-5,0,50,winHeight,color=BLACK)
-scrTop = platform(0,-45,winWidth,50,color=BLACK)
-scrBottom = platform(0,winHeight-5,winWidth,50,color=BLACK)
+scrLeft = collisionBox(-45,0,50,winHeight,color=BLACK)
+scrRight = collisionBox(winWidth-5,0,50,winHeight,color=BLACK)
+scrTop = collisionBox(0,-45,winWidth,50,color=BLACK)
+scrBottom = collisionBox(0,winHeight-5,winWidth,50,color=BLACK)
 screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 
@@ -144,7 +143,6 @@ while not window_should_close():
         you.x = 50; you.y = 350; you.yVel = 0
         them.x = 150; them.y = 350; them.yVel = 0
 
-#COLLISON
     collision(you)
     collision(them)
 
