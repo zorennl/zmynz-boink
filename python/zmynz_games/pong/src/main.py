@@ -4,6 +4,8 @@ from time import sleep
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 450
 
+fps = 60
+
 win = 0
 lose = 0
 
@@ -33,10 +35,14 @@ player = 0
 
 init_window(WINDOW_WIDTH, WINDOW_HEIGHT, "PONG")
 
-set_target_fps(60)
+set_target_fps(fps)
 
 while not window_should_close():
-
+    set_target_fps(fps)
+    if is_key_down(KEY_UP):
+        fps += 1
+    if is_key_down(KEY_DOWN):
+        fps -=1
     if is_key_down(KEY_W):
         paddle1.y -= playerspd
     if is_key_down(KEY_S):
@@ -47,9 +53,12 @@ while not window_should_close():
     if paddle1.y > WINDOW_HEIGHT - 50:
         paddle1.y -= playerspd
     if paddle2.y < 0:
-        paddle2.y += 3
+        paddle2.y += botspd
     if paddle2.y > WINDOW_HEIGHT - 50:
-        paddle2.y -= 3
+        if botspd == 1:
+            pass
+        if botspd > 2:
+            paddle2.y -= botspd
     # paddle2.y = ball.y - 25
     # PADDLE AI
     if paddle2.y > ball.y:
