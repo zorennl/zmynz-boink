@@ -29,7 +29,7 @@ box = Rectangle(0, 175,  300, 100)
 boxspd = 1
 
 while not window_should_close():
-
+    
     if is_key_down(KEY_W):
         zoren.y -= 2
     if is_key_down(KEY_S):
@@ -48,6 +48,8 @@ while not window_should_close():
     
     clear_background(BLANK)
 
+    begin_mode_2d(camera)
+    
     draw_text(f"x:{box.x}", 0, 0, 20, WHITE)
     draw_texture(spr, zoren.x, zoren.y, zoren.tint)
     draw_rectangle_rec(box, RED)
