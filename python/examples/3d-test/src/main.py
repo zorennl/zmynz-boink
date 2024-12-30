@@ -2,9 +2,9 @@ from pyray import *
 
 init_window(800, 500, "3D")
 
-camerapos = Vector3(1000, 1000, 1000)
+camerapos = Vector3(1000.0, 1000.0, 1000.0)
 
-camera = Camera3D(camerapos, Vector3(0, 0, 0), Vector3(0, 45, 0), 90, CAMERA_PERSPECTIVE)
+camera = Camera3D(Vector3(0, 0, 0), camerapos, Vector3(0, 45, 0), 90, CAMERA_ORTHOGRAPHIC)
 cubepos = Vector3(0,0,0)
 set_target_fps(60)
 
