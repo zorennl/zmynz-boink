@@ -4,11 +4,13 @@ init_window(800, 500, "3D")
 
 camerapos = Vector3(1000.0, 1000.0, 1000.0)
 
-camera = Camera3D(Vector3(0, 0, 0), camerapos, Vector3(0, 45, 0), 90, CAMERA_ORTHOGRAPHIC)
+camera = Camera3D(Vector3(10, 10, 10), Vector3(0,0,0), camerapos, 90, CAMERA_PERSPECTIVE)
 cubepos = Vector3(0,0,0)
 set_target_fps(60)
 
 while not window_should_close():
+    camera = Camera3D(Vector3(10, 10, 10), cubepos, camerapos, 90, CAMERA_PERSPECTIVE)
+    update_camera(camera, CAMERA_PERSPECTIVE)
     begin_mode_3d(camera)
     begin_drawing()
     clear_background(WHITE)
