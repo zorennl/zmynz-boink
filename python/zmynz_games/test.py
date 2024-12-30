@@ -18,11 +18,8 @@ set_target_fps(60)
 while not window_should_close():
     mousepos = get_mouse_position()
 
-    test = Rectangle(test1x,test1y,testw,testh)
-    
-    testw = test2x - test1x
-    testh = test2y - test1y
-    
+    test = Rectangle(test1x,test1y,testw,testh)    
+  
     begin_drawing()
     clear_background(WHITE)
 
@@ -34,10 +31,16 @@ while not window_should_close():
         if click_count == 2:
             test2x = mousepos.x
             test2y = mousepos.y
-        if click_count == 2:
+        if click_count == 3:
             click_count = 0
-
-    draw_rectangle_rec(test, RED)
+    if click_count > 0 and click_count != 1:
+        testw = test2x - test1x
+        testh = test2y - test1y
+        draw_rectangle_rec(test, RED)
+    if click_count == 1:
+        testh = mousepos.y - test1y 
+        testw = mousepos.x - test1x
+        draw_rectangle_rec(test, GREEN)
     end_drawing()
 
 close_window()
