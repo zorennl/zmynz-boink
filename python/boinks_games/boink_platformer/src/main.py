@@ -1,4 +1,5 @@
 from pyray import *
+import math
 
 
 class player:
@@ -62,13 +63,15 @@ class collisionBox:
     def draw(self):
         draw_rectangle(self.x,self.y,self.length,self.height,self.color)
 
-def stats():
+def stats(x,y,scale):
     mx = get_mouse_x()
     my = get_mouse_y()
     
-    draw_text(f'mx: {mx}, my: {my}',10,10,20,BLACK)
-    draw_text(f'px: {round(you.x,3)}, py: {you.y}',10,40,20,BLACK)
-    draw_text(f'xVel: {round(you.xVel,3)}, yVel: {you.yVel}', 10, 70, 20, BLACK)
+    draw_text(f'mx: {mx}, my: {my}',x+10,y+10,scale,BLACK)
+    draw_text(f'px: {round(you.x,3)}, py: {you.y}',x+210,y+10,scale,RED)
+    draw_text(f'xVel: {round(you.xVel,3)}, yVel: {you.yVel}', x+210, y+40, scale, RED)
+    draw_text(f'px: {round(them.x,3)}, py: {them.y}',x+410,y+10,scale,BLUE)
+    draw_text(f'xVel: {round(them.xVel,3)}, yVel: {them.yVel}', x+410, y+40, scale, BLUE)
 
 def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
     player.xVel += player.movement.xAcceleration*(is_key_down(keys[1])-is_key_down(keys[0]))
@@ -85,7 +88,7 @@ def movement(player,keys=[KEY_A,KEY_D,KEY_SPACE]):
 def collision(player):
     player.setHitbox()
     for platf in room_1:
-        if "platform" in platf.tags | "player" in platf.tags:
+        if "platform" in platf.tags or "player" in platf.tags:
     #floor
             if platf.isIn(player.bottom[0]) | platf.isIn(player.bottom[1]) | platf.isIn(player.bottom[2]) and player.yVel > 0:
                 player.y = platf.y-50
@@ -100,12 +103,14 @@ def collision(player):
         for platf in room_1: 
     #right walls
             if platf.isIn(player.right):
-                player.x = platf.x-50
+                player.x = platf.x-51
                 player.xVel = 0
+                player.yVel -= player.movement.gravity*.8
     #left walls
             if platf.isIn(player.left):
                 player.x = platf.x+platf.length
                 player.xVel = 0
+                player.yVel -= player.movement.gravity*.8
 
 
 winWidth = 1000
@@ -135,9 +140,27 @@ room_1 = [platform_1,platform_2,platform_3,platform_4,platform_5,platform_6] + s
 init_window(winWidth, winHeight, "platformer") #? INITIATE
 set_target_fps(60)
 
+def midpoint(x1,y1,x2,y2,xtra=False):
+    xa = x1+x2
+    xa /= 2
+    ya = y1+y2
+    ya /= 2
+    if xtra == False:
+        return Vector2(xa,ya)
+    else: return Vector2(xa-winWidth/2,ya-winHeight/2)
+
 while not window_should_close():
     begin_drawing()
     clear_background(WHITE)
+
+#    playersDist = 3/math.sqrt((you.x-them.x)**2 + (you.y-them.y)**2)
+    
+    playersMidpoint = midpoint(you.x,you.y,them.x,them.y)
+    
+    draw_circle_v(playersMidpoint,5,ORANGE)
+
+
+    begin_mode_2d(Camera2D(Vector2(winWidth/2,winHeight/2),playersMidpoint,0,1))
 
     movement(you,keys=[KEY_A,KEY_D,KEY_W])
     movement(them,keys=[KEY_LEFT,KEY_RIGHT,KEY_UP])
@@ -155,6 +178,7 @@ while not window_should_close():
     you.draw()
     them.draw()
 
-    stats()
+
+    stats(10,10,20)
     end_drawing()
 close_window()
