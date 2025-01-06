@@ -23,7 +23,7 @@ class particle:
     def draw(dt, particlelist):
         for i in range(len(particlelist)):
             particlelist[i].life -= 1
-
+            
             particlelist[i].color.a = abs(floor(particlelist[i].life * 0.1))
                                        
             if particlelist[i].life > 0:
@@ -49,13 +49,16 @@ set_target_fps(60)
 
 particles = []
 
-for i in range(1000):
-    particles.append(particle(Vector2(400,250),5,randint(0,360),2,randint(200,300)))
-
 while not window_should_close():
 
     begin_drawing()
     clear_background(BLANK)
+
+    draw_fps(0,0)
+    
+    if is_mouse_button_down(MOUSE_BUTTON_LEFT):
+        for i in range(100):
+           particles.append(particle(get_mouse_position(),5,randint(0,360),2,randint(100,400)))
 
     particle.draw(2, particles)
 
