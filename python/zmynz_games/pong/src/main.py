@@ -55,8 +55,6 @@ while not window_should_close():
     if paddle2.y < 0:
         paddle2.y += botspd
     if paddle2.y > WINDOW_HEIGHT - 50:
-        if botspd == 1:
-            pass
         if botspd > 2:
             paddle2.y -= botspd
     # paddle2.y = ball.y - 25
