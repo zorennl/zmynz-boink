@@ -8,14 +8,13 @@ WINDOW_HEIGHT = 500
 WINDOW_BOX = Rectangle(1, 1, 799, 499)
 
 class particle:
-    def __init__(self, pos: Vector2, radius, angle, speed, life: float):
+    def __init__(self, pos: Vector2, radius, angle, speed, life: float, color):
         self.pos = pos
         self.radius = radius
         self.angle = angle
         self.speed = speed
         self.life = life
-
-        self.color = Color(0,121,241,255)
+        self.color = color
         self.radians = self.angle * pi / 180
 
         self.velocity = Vector2(self.speed * cos(self.radians), -self.speed * sin(self.radians))
@@ -54,11 +53,11 @@ while not window_should_close():
     begin_drawing()
     clear_background(BLANK)
 
-    draw_fps(0,0)
+    draw_fps(2,2)
     
     if is_mouse_button_down(MOUSE_BUTTON_LEFT):
         for i in range(100):
-           particles.append(particle(get_mouse_position(),5,randint(0,360),2,randint(100,400)))
+           particles.append(particle(get_mouse_position(),5,randint(0,360),2,randint(100,400),Color(randint(0,255),randint(0,255),randint(0,255),255)))
 
     particle.draw(2, particles)
 
