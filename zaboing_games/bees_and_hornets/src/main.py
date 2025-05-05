@@ -30,14 +30,14 @@ def draw_entity_rec(entity):
 init_window(300,300,"raylib bees and hornets")
 set_target_fps(60)
 
-atlas = load_texture(join('assets','sprites.png'))
+beeatlas = load_texture(join('assets','sprites.png'))
 
 while not window_should_close():
 
     begin_drawing()
     clear_background(BLACK)
 
-    draw_texture(sprites,0,0,WHITE)
+    draw_texture_pro(beeatlas,bees[0],Rectangle(150,150,10,10),Vector2(5,5),0,WHITE)
 
     end_drawing()
 
