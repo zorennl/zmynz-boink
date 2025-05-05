@@ -33,7 +33,7 @@ botspd = 2
 bot = 0
 player = 0
 
-init_window(WINDOW_WIDTH, WINDOW_HEIGHT, "PONG")
+init_window(WINDOW_WIDTH, WINDOW_HEIGHT, "raylib PONG")
 
 set_target_fps(fps)
 

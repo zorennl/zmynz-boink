@@ -11,7 +11,7 @@ mNum = get_current_monitor()
 
 
 
-init_window(110,140,"")
+init_window(110,140,"raylib")
 set_target_fps(60)
 
 xMax = get_monitor_width(mNum)

@@ -137,7 +137,7 @@ screenWalls = [scrLeft,scrRight,scrTop,scrBottom]
 
 
 room_1 = [platform_1,platform_2,platform_3,platform_4,platform_5,platform_6] + screenWalls + [you.hitbox,them.hitbox]
-init_window(winWidth, winHeight, "platformer") #? INITIATE
+init_window(winWidth, winHeight, "raylib platformer") #? INITIATE
 set_target_fps(60)
 
 def midpoint(x1,y1,x2,y2,xtra=False):

@@ -25,7 +25,7 @@ class color:
 
 raimbow = color(0, 1, 1)
 
-init_window(WINDOW_WIDTH, WINDOW_HEIGHT, "")
+init_window(WINDOW_WIDTH, WINDOW_HEIGHT, "raylib")
 
 set_window_state(1)
 
@@ -40,9 +40,9 @@ player = load_texture(playerr)
 
 while not window_should_close():
 
-    if dvdpos.y >= WINDOW_HEIGHT - 56:
+    if dvdpos.y >= WINDOW_HEIGHT - 46:
         dvddir.y = -1
-    if dvdpos.x >= WINDOW_WIDTH - 107:
+    if dvdpos.x >= WINDOW_WIDTH - 100:
         dvddir.x = -1
     if dvdpos.y <= 0:
         dvddir.y = 1
