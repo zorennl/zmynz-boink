@@ -2,7 +2,9 @@ from pyray import *
 from sys import platform
 import math
 from os.path import join
+import random
 
+debug = False
 # Entities
 entities = [
     Rectangle(0,0,10,10),
@@ -50,7 +52,7 @@ else:
 bees = []
 player = Entity(10,2,entity_atlas,entities[0],Rectangle(0,0,25,25),0,WHITE,None)
 while not window_should_close():
-    bee = Entity(10,1.5,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
+    bee = Entity(10,random.choice([1.0,1.2,1.1,1.3,1.5,1.4,1.6,1.55]),entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
 
     if is_key_down(KEY_W):
         player.rectangle.y -= player.speed
@@ -63,6 +65,8 @@ while not window_should_close():
 
     if is_key_pressed(KEY_R):
         summon_entity(bee,bees)
+    if is_key_pressed(KEY_F3):
+        debug = not debug
     begin_drawing()
     clear_background(BLACK)
 
@@ -77,8 +81,8 @@ while not window_should_close():
         i.rectangle.x += i.speed * i.extra.x
         i.rectangle.y += i.speed * i.extra.y
 
-    draw_fps(0,0)
-
+    if debug:
+        draw_text(f'bees:{len(bees)}',0,0,10,GREEN)
     end_drawing()
 
 close_window()
