@@ -46,7 +46,7 @@ init_window(300,300,"raylib bees and hornets")
 set_target_fps(60)
 
 if platform == "win32":
-    entity_atlas = load_texture('zaboing_games\\assets\\sprites.png')
+    entity_atlas = load_texture('zaboing_games\\bees_and_hornets\\assets\\sprites.png')
 else:
     entity_atlas = load_texture('assets/sprites.png')
 bees = []
