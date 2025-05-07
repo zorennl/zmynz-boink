@@ -1,4 +1,5 @@
 from pyray import *
+from sys import platform
 from os.path import join
 
 # Entities
@@ -30,7 +31,11 @@ def draw_entity_rec(entity):
 init_window(300,300,"raylib bees and hornets")
 set_target_fps(60)
 
-entity_atlas = load_texture(join('assets','sprites.png'))
+if platform == "win32":
+    entity_atlas = load_texture('zaboing_games\\assets\\sprites.png')
+else:
+    entity_atlas = load_texture('assets/sprites.png')
+
 bee = Entity(10,entity_atlas,entities[1],Rectangle(200,200,10,10),WHITE,None)
 player = Entity(10,entity_atlas,entities[0],Rectangle(100,100,20,20),WHITE,None)
 while not window_should_close():
