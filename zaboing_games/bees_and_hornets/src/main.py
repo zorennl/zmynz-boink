@@ -48,9 +48,10 @@ if platform == "win32":
 else:
     entity_atlas = load_texture('assets/sprites.png')
 bees = []
-bee = Entity(10,1.5,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
 player = Entity(10,2,entity_atlas,entities[0],Rectangle(0,0,25,25),0,WHITE,None)
 while not window_should_close():
+    bee = Entity(10,1.5,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
+
     if is_key_down(KEY_W):
         player.rectangle.y -= player.speed
     if is_key_down(KEY_S):
@@ -75,6 +76,8 @@ while not window_should_close():
             i.source.width = 10
         i.rectangle.x += i.speed * i.extra.x
         i.rectangle.y += i.speed * i.extra.y
+
+    draw_fps(0,0)
 
     end_drawing()
 
