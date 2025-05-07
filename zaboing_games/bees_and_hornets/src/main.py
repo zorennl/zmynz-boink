@@ -1,3 +1,4 @@
+test
 from pyray import *
 from sys import platform
 import math
