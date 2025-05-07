@@ -35,7 +35,7 @@ def get_direction(pos1,pos2):
     dx = pos1.x - pos2.x
     dy = pos1.y - pos2.y
     distance = math.sqrt(dx*dx+dy*dy)
-    if distance == 0:
+    if distance < 10:
         return Vector2(0,0)
     else:
         return Vector2(dx/distance,dy/distance)
