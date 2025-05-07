@@ -1,3 +1,5 @@
+# test1
+
 from pyray import *
 from sys import platform
 import math
@@ -46,13 +48,13 @@ init_window(300,300,"raylib bees and hornets")
 set_target_fps(60)
 
 if platform == "win32":
-    entity_atlas = load_texture('zaboing_games\\assets\\sprites.png')
+    entity_atlas = load_texture('zaboing_games\\bees_and_hornets\\assets\\sprites.png')
 else:
     entity_atlas = load_texture('assets/sprites.png')
 bees = []
 player = Entity(10,2,entity_atlas,entities[0],Rectangle(0,0,25,25),0,WHITE,None)
 while not window_should_close():
-    bee = Entity(10,random.choice([1.0,1.2,1.1,1.3,1.5,1.4,1.6,1.55]),entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
+    bee = Entity(10,random.randint(10,15)/10,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
 
     if is_key_down(KEY_W):
         player.rectangle.y -= player.speed
