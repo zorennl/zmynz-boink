@@ -9,7 +9,7 @@ debug = False
 entities = [
     Rectangle(0,0,10,10),
     Rectangle(11,0,10,10),
-    Rectangle(21,0,10,10)
+    Rectangle(22,0,10,10)
 ]
 # General entity class 
 class Entity:
@@ -47,13 +47,16 @@ set_target_fps(60)
 
 if platform == "win32":
     entity_atlas = load_texture('zaboing_games\\bees_and_hornets\\assets\\sprites.png')
-    entity_atlas = load_texture('zaboing_games\\bees_and_hornets\\assets\\sprites.png')
 else:
     entity_atlas = load_texture('assets/sprites.png')
 bees = []
+minerals = []
+# Player
 player = Entity(10,2,entity_atlas,entities[0],Rectangle(0,0,25,25),0,WHITE,None)
+mineral_counter = 0
 while not window_should_close():
     bee = Entity(10,random.randint(10,15)/10,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
+    mineral = Entity(1,.0,entity_atlas,entities[2],Rectangle(random.randint(0,300),random.randint(0,300),10,10),0,WHITE,None)
 
     if is_key_down(KEY_W):
         player.rectangle.y -= player.speed
@@ -66,10 +69,19 @@ while not window_should_close():
 
     if is_key_pressed(KEY_R):
         summon_entity(bee,bees)
+    if is_key_pressed(KEY_F):
+        summon_entity(mineral,minerals)
     if is_key_pressed(KEY_F3):
         debug = not debug
     begin_drawing()
     clear_background(BLACK)
+
+    for i in minerals:
+        draw_entity_sprite(i)
+        if check_collision_recs(player.rectangle,i.rectangle) and i.health == 1:
+            mineral_counter += 1
+            i.health = 0
+            del minerals[minerals.index(i)]
 
     draw_entity_sprite(player)
     for i in bees:
@@ -83,7 +95,7 @@ while not window_should_close():
         i.rectangle.y += i.speed * i.extra.y
 
     if debug:
-        draw_text(f'bees:{len(bees)}',0,0,10,GREEN)
+        draw_text(f'bees:{len(bees)}\nminerals:{mineral_counter}',0,0,10,GREEN)
     end_drawing()
 
 close_window()
