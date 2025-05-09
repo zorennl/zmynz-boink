@@ -4,6 +4,19 @@ import math
 from os.path import join
 import random
 
+# Camera
+camera = Camera2D()
+camera.zoom = 1
+camera.rotation = 0
+
+# Rectangles for finding player position
+position_rectangles = [
+    Rectangle(20,20,10,10),
+    Rectangle(270,20,10,10),
+    Rectangle(20,270,10,10),
+    Rectangle(270,270,10,10)
+]
+
 debug = False
 # Entities
 entities = [
@@ -11,6 +24,7 @@ entities = [
     Rectangle(11,0,10,10),
     Rectangle(22,0,10,10)
 ]
+
 # General entity class 
 class Entity:
     def __init__(self, health, speed=float, sprite=None, source=None, rectangle=Rectangle, rotation=int,color=None, extra=None):
@@ -28,7 +42,7 @@ def summon_entity(entity, entity_list: []):
     entity_list.append(entity)   
 
 def draw_entity_sprite(entity):
-    draw_texture_pro(entity.sprite,entity.source,entity.rectangle,Vector2(0,0),entity.rotation,WHITE)
+    draw_texture_pro(entity.sprite,entity.source,entity.rectangle,Vector2(0,0),entity.rotation,entity.color)
 
 def draw_entity_rec(entity):
     draw_rectangle_rec(entity.rectangle,entity.color)
@@ -52,9 +66,11 @@ else:
 bees = []
 minerals = []
 # Player
-player = Entity(10,2,entity_atlas,entities[0],Rectangle(0,0,25,25),0,WHITE,None)
+player = Entity(10,2,entity_atlas,entities[0],Rectangle(125,125,25,25),0,WHITE,None)
 mineral_counter = 0
 while not window_should_close():
+    camera.target = Vector2(player.rectangle.x-138,player.rectangle.y-138)
+
     bee = Entity(10,random.randint(10,15)/10,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
     mineral = Entity(1,.0,entity_atlas,entities[2],Rectangle(random.randint(0,300),random.randint(0,300),10,10),0,WHITE,None)
 
@@ -69,19 +85,21 @@ while not window_should_close():
 
     if is_key_pressed(KEY_R):
         summon_entity(bee,bees)
-    if is_key_pressed(KEY_F):
+    if is_key_down(KEY_F):
         summon_entity(mineral,minerals)
     if is_key_pressed(KEY_F3):
         debug = not debug
     begin_drawing()
     clear_background(BLACK)
 
+    begin_mode_2d(camera)
     for i in minerals:
         draw_entity_sprite(i)
         if check_collision_recs(player.rectangle,i.rectangle) and i.health == 1:
             mineral_counter += 1
             i.health = 0
             del minerals[minerals.index(i)]
+
 
     draw_entity_sprite(player)
     for i in bees:
@@ -93,6 +111,12 @@ while not window_should_close():
             i.source.width = 10
         i.rectangle.x += i.speed * i.extra.x
         i.rectangle.y += i.speed * i.extra.y
+
+    for i in position_rectangles:
+        draw_rectangle_rec(i,WHITE)
+
+    end_mode_2d()
+  
 
     if debug:
         draw_text(f'bees:{len(bees)}\nminerals:{mineral_counter}',0,0,10,GREEN)
