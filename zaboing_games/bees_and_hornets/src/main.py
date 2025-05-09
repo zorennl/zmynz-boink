@@ -59,8 +59,7 @@ def get_direction(pos1,pos2):
     distance = math.sqrt(dx*dx+dy*dy)
     if distance < 10:
         return Vector2(0,0)
-    else:
-        return Vector2(dx/distance,dy/distance)
+    else:        return Vector2(dx/distance,dy/distance)
 
 init_window(300,300,"raylib bees and hornets")
 set_target_fps(60)
@@ -70,6 +69,7 @@ if platform == "win32":
 else:
     entity_atlas = load_texture('assets/sprites.png')
 bees = []
+beedest = Vector2(0,0)
 minerals = []
 # Player
 player = Entity(10,2,entity_atlas,entities[0],Rectangle(138,138,25,25),0,WHITE,None)
@@ -78,7 +78,7 @@ while not window_should_close():
     camera.target = Vector2(player.rectangle.x-138,player.rectangle.y-138)
 
     bee = Entity(10,random.randint(10,15)/10,entity_atlas,entities[1],Rectangle(200,200,15,15),0,WHITE,Vector2(0,0))
-    mineral = Entity(1,0,entity_atlas,entities[2],Rectangle(random.randint(-1000,1000),random.randint(-1000,1000),10,10),0,WHITE,Vector2(0,0))
+    mineral = Entity(5,0,entity_atlas,entities[2],Rectangle(random.randint(-1000,1000),random.randint(-1000,1000),10,10),0,WHITE,Vector2(0,0))
 
     if is_key_down(KEY_W) and player.rectangle.y > -1000:
         player.rectangle.y -= player.speed
@@ -88,6 +88,9 @@ while not window_should_close():
         player.rectangle.x -= player.speed
     if is_key_down(KEY_D) and player.rectangle.x < 1000:
         player.rectangle.x += player.speed
+
+    if is_mouse_button_down(MOUSE_BUTTON_LEFT):
+        beedest = get_mouse_position()        
 
     if is_key_pressed(KEY_R):
         summon_entity(bee,bees)
@@ -101,27 +104,22 @@ while not window_should_close():
     begin_mode_2d(camera)
     for i in minerals:
         draw_entity_sprite(i)
+        if i.health == 1:
+            i.color = RED
         if check_collision_recs(player.rectangle,i.rectangle) and i.health == 1:
             mineral_counter += 1
             i.health = 0
             del minerals[minerals.index(i)]
         for x in bees:
-            i.speed = get_distance(Vector2(i.rectangle.x,i.rectangle.y),Vector2(x.rectangle.x,x.rectangle.y))
-            if i.speed < 100:
-                x.extra = get_direction(Vector2(i.rectangle.x,i.rectangle.y),Vector2(x.rectangle.x,x.rectangle.y))
-            else:
-                x.extra = get_direction(Vector2(player.rectangle.x,player.rectangle.y),Vector2(x.rectangle.x,x.rectangle.y))
-            
-
-
+            if get_distance(i.rectangle,x.rectangle) < 50 and i.health > 1:
+                i.health-=1
+                
+    
     draw_entity_sprite(player)
+
     for i in bees:
         draw_entity_sprite(i)
-        # for x in minerals:
-        #     if x.speed != 1:
-        #         i.extra = get_direction(Vector2(player.rectangle.x,player.rectangle.y),Vector2(i.rectangle.x,i.rectangle.y))
-        #     else:
-        #         i.extra = get_direction(Vector2(i.rectangle.x,i.rectangle.y),Vector2(x.rectangle.x,x.rectangle.y))
+        i.extra = get_direction(Vector2(beedest.x+player.rectangle.x-150,beedest.y+player.rectangle.y-150),Vector2(i.rectangle.x,i.rectangle.y))
         if i.extra.x < 0:
             i.source.width = -10
         else:
