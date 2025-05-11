@@ -88,9 +88,9 @@ while not window_should_close():
         player.rectangle.x -= player.speed
     if is_key_down(KEY_D) and player.rectangle.x < 1000:
         player.rectangle.x += player.speed
-
+    
     if is_mouse_button_down(MOUSE_BUTTON_LEFT):
-        beedest = get_mouse_position()        
+        beedest = get_mouse_position()       
 
     if is_key_pressed(KEY_R):
         summon_entity(bee,bees)
@@ -112,14 +112,16 @@ while not window_should_close():
             del minerals[minerals.index(i)]
         for x in bees:
             if get_distance(i.rectangle,x.rectangle) < 50 and i.health > 1:
+                # x.health -=1
+                # if x.health == 0:
+                #     x.health = 100
                 i.health-=1
-                
-    
+  
     draw_entity_sprite(player)
 
     for i in bees:
         draw_entity_sprite(i)
-        i.extra = get_direction(Vector2(beedest.x+player.rectangle.x-150,beedest.y+player.rectangle.y-150),Vector2(i.rectangle.x,i.rectangle.y))
+        i.extra = get_direction(Vector2(beedest.x+camera.target.x,beedest.y+camera.target.y),Vector2(i.rectangle.x,i.rectangle.y))
         if i.extra.x < 0:
             i.source.width = -10
         else:
@@ -131,7 +133,6 @@ while not window_should_close():
         draw_rectangle_rec(i,WHITE)
 
     end_mode_2d()
-  
 
     if debug:
         draw_text(f'x:{player.rectangle.x} y:{player.rectangle.y}\nbees:{len(bees)}\nminerals:{mineral_counter}',0,0,10,GREEN)
