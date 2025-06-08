@@ -1,7 +1,7 @@
 import pyray as r
 import math
 
-scale = 1
+scale = 0.5
 
 
 class Planet:
@@ -47,7 +47,7 @@ neptune = Planet(r.Vector2(500 + 700, 500), 3.54 * 2, r.DARKBLUE, 80)
 player_pos = r.Vector2(1000 * scale, 1000 * scale)
 player_color = r.WHITE
 player_size = 10 * scale
-#player_speed = 1 * scale
+player_speed = 70
 player_direction = 0
 player_velocity = r.Vector2(0.0, 0.0)
 player_throttle = 0
@@ -55,7 +55,10 @@ player_throttle = 0
 cursor_size = 5 * scale
 cursor_color = r.Color(255, 255, 255, 50)
 
-r.init_window(int(2000 / (scale**-1)), int(2000 / (scale**-1)), "space")
+WIDTH = int(2000 / (scale**-1))
+HEIGHT = int(2000 / (scale**-1))
+
+r.init_window(WIDTH, HEIGHT, "space")
 r.disable_cursor()
 r.set_target_fps(60)
 
@@ -71,13 +74,18 @@ while not r.window_should_close():
         player_throttle -= 1
 
     if r.is_key_down(r.KEY_Q):
-        player_direction += .01
+        player_direction += 0.05
     if r.is_key_down(r.KEY_E):
-        player_direction -= .01
+        player_direction -= 0.05
 
     if r.is_key_down(r.KEY_SPACE):
-        player_velocity.x -= math.sin(player_direction) * player_throttle / 10
-        player_velocity.y -= math.cos(player_direction) * player_throttle / 10
+        player_velocity.x -= math.sin(player_direction) * player_throttle / player_speed
+        player_velocity.y -= math.cos(player_direction) * player_throttle / player_speed
+
+    if player_pos.x > WIDTH or player_pos.x < 0:
+        player_velocity.x *= -1
+    if player_pos.y > HEIGHT or player_pos.y < 0:
+        player_velocity.y *= -1
 
     player_pos.x += player_velocity.x
     player_pos.y += player_velocity.y
