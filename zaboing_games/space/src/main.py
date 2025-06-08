@@ -1,6 +1,6 @@
 import pyray as r
 
-scale = .5
+scale = 1
 
 
 class Planet:
@@ -26,7 +26,7 @@ def get_direction(origin=r.Vector2, target=r.Vector2):
 def get_distance(origin=r.Vector2, target=r.Vector2):
     dx = origin.x * origin.x + target.x * target.x
     dy = origin.y * origin.y + target.y * target.y
-    distance = (dx + dy) ** (1/2)
+    distance = (dx + dy) ** (1 / 2)
     return distance
 
 
