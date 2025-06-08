@@ -2,6 +2,7 @@ import pyray as r
 
 scale = 1
 
+
 class Planet:
     def __init__(self, position=r.Vector2, radius=float, color=r.Color, mass=float):
         self.position = position
@@ -10,7 +11,23 @@ class Planet:
         self.mass = mass
 
     def draw(self):
-        r.draw_circle_v(r.vector2_multiply(self.position, (scale, scale)), (self.radius * scale), self.color)
+        r.draw_circle_v(
+            r.vector2_multiply(self.position, (scale, scale)),
+            (self.radius * scale),
+            self.color,
+        )
+
+
+def get_direction(origin=r.Vector2, target=r.Vector2):
+    direction = r.Vector2(target.x - origin.x, target.y - origin.y)
+    return direction
+
+
+def get_distance(origin=r.Vector2, target=r.Vector2):
+    dx = origin.x * origin.x + target.x * target.x
+    dy = origin.y * origin.y + target.y * target.y
+    distance = dx + dy
+    return distance
 
 
 sun = Planet(r.Vector2(500, 500), 100, r.YELLOW, 100)
@@ -26,26 +43,29 @@ uranus = Planet(
 )  # Using custom cyan
 neptune = Planet(r.Vector2(500 + 700, 500), 3.54 * 2, r.DARKBLUE, 80)
 
-player_pos = r.Vector2(1000*scale, 1000*scale)
+player_pos = r.Vector2(1000 * scale, 1000 * scale)
 player_color = r.WHITE
-player_size = 10*scale
-player_speed = 1*scale
+player_size = 10 * scale
+player_speed = 1 * scale
 player_direction = r.Vector2(1, -1)
 player_velocity = r.Vector2(0.0, 0.0)
 
-cursor_size = 5*scale
+cursor_size = 5 * scale
 cursor_color = r.Color(255, 255, 255, 50)
 
-r.init_window(int(2000/(scale**-1)), int(2000/(scale**-1)), "space")
+r.init_window(int(2000 / (scale**-1)), int(2000 / (scale**-1)), "space")
 r.disable_cursor()
 r.set_target_fps(60)
 
 while not r.window_should_close():
     cursor_pos = r.get_mouse_position()
 
+    player_direction = get_direction(cursor_pos, player_pos)
+    player_speed = get_distance(cursor_pos, player_pos)
+
     if r.is_key_down(r.KEY_SPACE):
-        player_velocity.x += player_speed * player_direction.x
-        player_velocity.y += player_speed * player_direction.y
+        player_velocity.x += player_speed / player_direction.x
+        player_velocity.y += player_speed / player_direction.y
 
     player_pos.x += player_velocity.x
     player_pos.y += player_velocity.y
