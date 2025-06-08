@@ -105,6 +105,7 @@ while not r.window_should_close():
     neptune.draw()
 
     r.draw_circle_v(player_pos, player_size, player_color)
+    r.draw_circle_v(r.vector2_subtract(player_pos,(10*math.sin(player_direction),10*math.cos(player_direction))), player_size // 5, player_color)
     r.draw_circle_v(cursor_pos, cursor_size, cursor_color)
 
     r.end_drawing()
