@@ -1,5 +1,6 @@
 import pyray as r
 
+scale = 1
 
 class Planet:
     def __init__(self, position=r.Vector2, radius=float, color=r.Color, mass=float):
@@ -9,7 +10,7 @@ class Planet:
         self.mass = mass
 
     def draw(self):
-        r.draw_circle_v(self.position, self.radius, self.color)
+        r.draw_circle_v(r.vector2_multiply(self.position, (scale, scale)), (self.radius * scale), self.color)
 
 
 sun = Planet(r.Vector2(500, 500), 100, r.YELLOW, 100)
@@ -25,17 +26,17 @@ uranus = Planet(
 )  # Using custom cyan
 neptune = Planet(r.Vector2(500 + 700, 500), 3.54 * 2, r.DARKBLUE, 80)
 
-player_pos = r.Vector2(1000, 1000)
+player_pos = r.Vector2(1000*scale, 1000*scale)
 player_color = r.WHITE
-player_size = 10
-player_speed = 1
+player_size = 10*scale
+player_speed = 1*scale
 player_direction = r.Vector2(1, -1)
 player_velocity = r.Vector2(0.0, 0.0)
 
-cursor_size = 5
+cursor_size = 5*scale
 cursor_color = r.Color(255, 255, 255, 50)
 
-r.init_window(2000, 2000, "space")
+r.init_window(int(2000/(scale**-1)), int(2000/(scale**-1)), "space")
 r.disable_cursor()
 r.set_target_fps(60)
 
