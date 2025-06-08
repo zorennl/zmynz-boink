@@ -1,6 +1,6 @@
 import pyray as r
 
-scale = 1
+scale = .5
 
 
 class Planet:
@@ -26,7 +26,7 @@ def get_direction(origin=r.Vector2, target=r.Vector2):
 def get_distance(origin=r.Vector2, target=r.Vector2):
     dx = origin.x * origin.x + target.x * target.x
     dy = origin.y * origin.y + target.y * target.y
-    distance = dx + dy
+    distance = (dx + dy) ** (1/2)
     return distance
 
 
@@ -70,8 +70,8 @@ while not r.window_should_close():
         player_throttle -= 1
 
     if r.is_key_down(r.KEY_SPACE):
-        player_velocity.x += player_speed / player_direction.x
-        player_velocity.y += player_speed / player_direction.y
+        player_velocity.x -= player_direction.x / player_speed
+        player_velocity.y -= player_direction.y / player_speed
 
     player_pos.x += player_velocity.x
     player_pos.y += player_velocity.y
