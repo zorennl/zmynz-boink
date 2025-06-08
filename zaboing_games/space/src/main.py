@@ -49,6 +49,7 @@ player_size = 10 * scale
 player_speed = 1 * scale
 player_direction = r.Vector2(1, -1)
 player_velocity = r.Vector2(0.0, 0.0)
+player_throttle = 0
 
 cursor_size = 5 * scale
 cursor_color = r.Color(255, 255, 255, 50)
@@ -60,8 +61,13 @@ r.set_target_fps(60)
 while not r.window_should_close():
     cursor_pos = r.get_mouse_position()
 
-    player_direction = get_direction(cursor_pos, player_pos)
-    player_speed = get_distance(cursor_pos, player_pos)
+    # player_direction = get_direction(cursor_pos, player_pos)
+    # player_speed = get_distance(cursor_pos, player_pos)
+
+    if r.is_key_down(r.KEY_LEFT_SHIFT) and player_throttle < 100:
+        player_throttle += 1
+    if r.is_key_down(r.KEY_LEFT_CONTROL) and player_throttle > 0:
+        player_throttle -= 1
 
     if r.is_key_down(r.KEY_SPACE):
         player_velocity.x += player_speed / player_direction.x
