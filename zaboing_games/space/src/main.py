@@ -1,4 +1,5 @@
 import pyray as r
+import math
 
 scale = 1
 
@@ -46,8 +47,8 @@ neptune = Planet(r.Vector2(500 + 700, 500), 3.54 * 2, r.DARKBLUE, 80)
 player_pos = r.Vector2(1000 * scale, 1000 * scale)
 player_color = r.WHITE
 player_size = 10 * scale
-player_speed = 1 * scale
-player_direction = r.Vector2(1, -1)
+#player_speed = 1 * scale
+player_direction = 0
 player_velocity = r.Vector2(0.0, 0.0)
 player_throttle = 0
 
@@ -69,9 +70,14 @@ while not r.window_should_close():
     if r.is_key_down(r.KEY_LEFT_CONTROL) and player_throttle > 0:
         player_throttle -= 1
 
+    if r.is_key_down(r.KEY_Q):
+        player_direction += .01
+    if r.is_key_down(r.KEY_E):
+        player_direction -= .01
+
     if r.is_key_down(r.KEY_SPACE):
-        player_velocity.x -= player_direction.x / player_speed
-        player_velocity.y -= player_direction.y / player_speed
+        player_velocity.x -= math.sin(player_direction) * player_throttle / 10
+        player_velocity.y -= math.cos(player_direction) * player_throttle / 10
 
     player_pos.x += player_velocity.x
     player_pos.y += player_velocity.y
