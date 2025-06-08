@@ -51,6 +51,7 @@ player_speed = 70
 player_direction = 0
 player_velocity = r.Vector2(0.0, 0.0)
 player_throttle = 0
+player_turn_speed = 0.01
 
 cursor_size = 5 * scale
 cursor_color = r.Color(255, 255, 255, 50)
@@ -74,9 +75,9 @@ while not r.window_should_close():
         player_throttle -= 1
 
     if r.is_key_down(r.KEY_Q):
-        player_direction += 0.05
+        player_direction += player_turn_speed
     if r.is_key_down(r.KEY_E):
-        player_direction -= 0.05
+        player_direction -= player_turn_speed
 
     if r.is_key_down(r.KEY_SPACE):
         player_velocity.x -= math.sin(player_direction) * player_throttle / player_speed
@@ -105,8 +106,20 @@ while not r.window_should_close():
     neptune.draw()
 
     r.draw_circle_v(player_pos, player_size, player_color)
-    r.draw_circle_v(r.vector2_subtract(player_pos,(10*math.sin(player_direction),10*math.cos(player_direction))), player_size // 5, player_color)
+    r.draw_circle_v(
+        r.vector2_subtract(
+            player_pos,
+            (10 * math.sin(player_direction), 10 * math.cos(player_direction)),
+        ),
+        player_size // 5,
+        player_color,
+    )
     r.draw_circle_v(cursor_pos, cursor_size, cursor_color)
+
+    r.draw_rectangle_rec(
+        r.Rectangle(10, (HEIGHT - 10) - player_throttle, 10, player_throttle), r.GREEN
+    )
+    r.draw_text(f"Throttle:{player_throttle}%", 25, HEIGHT - 20, 10, r.GREEN)
 
     r.end_drawing()
 r.close_window()
