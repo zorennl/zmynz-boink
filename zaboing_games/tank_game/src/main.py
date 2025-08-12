@@ -8,6 +8,8 @@ class Tank:
         self.speed = speed
         self.controls = controls
         self.color = color
+        self.mv_direction = 0
+        self.direction = 0
 
     def move(self):
         mv_directions = [
@@ -20,39 +22,37 @@ class Tank:
             Vector2(1, 0),    # right
             Vector2(1, 1)     # top-right
         ]
-        mv_direction = 0
 
-        if is_key_pressed(self.controls[1]) and mv_direction == 0:
-            mv_direction = 7
-        elif is_key_pressed(self.controls[3]) and mv_direction == 7:
-            mv_direction = 0
+        if is_key_pressed(self.controls[1]) and self.mv_direction == 0:
+            self.mv_direction = 7
+        elif is_key_pressed(self.controls[3]) and self.mv_direction == 7:
+            self.mv_direction = 0
         elif is_key_pressed(self.controls[1]):
-            mv_direction -= 1
+            self.mv_direction -= 1
         elif is_key_pressed(self.controls[3]):
-            mv_direction += 1
+            self.mv_direction += 1
 
         if is_key_down(self.controls[2]):
-            self.position.x += mv_directions[mv_direction].x*self.speed
-            self.position.y += mv_directions[mv_direction].y*self.speed
+            self.position.x += mv_directions[self.mv_direction].x*self.speed
+            self.position.y += mv_directions[self.mv_direction].y*self.speed
         if is_key_down(self.controls[0]):
-            self.position.x -= mv_directions[mv_direction].x*self.speed
-            self.position.y -= mv_directions[mv_direction].y*self.speed
+            self.position.x -= mv_directions[self.mv_direction].x*self.speed
+            self.position.y -= mv_directions[self.mv_direction].y*self.speed
 
           
     def draw(self):
         directions = [0, 45, 90, 135, 180, 225, 270, 315, 360]
-        direction = 0
       
-        if is_key_pressed(self.controls[0]) and direction == 0:
-            direction = 7
-        elif is_key_pressed(self.controls[3]) and direction == 7:
-            direction = 0
+        if is_key_pressed(self.controls[1]) and self.direction == 0:
+            self.direction = 7
+        elif is_key_pressed(self.controls[3]) and self.direction == 7:
+            self.direction = 0
         elif is_key_pressed(self.controls[1]):
-            direction -= 1
+            self.direction -= 1
         elif is_key_pressed(self.controls[3]):
-            direction += 1
+            self.direction += 1
 
-        draw_texture_pro(self.sprite,Rectangle(0,0,100,100),Rectangle(self.position.x,self.position.y,10,10),Vector2(5,5),directions[direction],self.color)
+        draw_texture_pro(self.sprite,Rectangle(0,0,100,100),Rectangle(self.position.x,self.position.y,10,10),Vector2(5,5),directions[self.direction],self.color)
 
 init_window(500,500,"tank game")
 set_target_fps(60)
@@ -65,6 +65,7 @@ while not window_should_close():
     clear_background(BLANK)
 
     player.draw()
+    player.move()
 
     end_drawing()
 close_window()
