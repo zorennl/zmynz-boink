@@ -14,13 +14,13 @@ class Tank:
     def move(self):
         mv_directions = [
             Vector2(0, 1),    # top
-            Vector2(-1, 1),   # top-left
+            Vector2(-.707, .707),   # top-left
             Vector2(-1, 0),   # left
-            Vector2(-1, -1),  # bottom-left
+            Vector2(-.707, -.707),  # bottom-left
             Vector2(0, -1),   # bottom
-            Vector2(1, -1),   # bottom-right
+            Vector2(.707, -.707),   # bottom-right
             Vector2(1, 0),    # right
-            Vector2(1, 1)     # top-right
+            Vector2(.707, .707)     # top-right
         ]
 
         if is_key_pressed(self.controls[1]) and self.mv_direction == 0:
