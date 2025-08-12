@@ -101,7 +101,8 @@ while not r.window_should_close():
     for i in planets:
         i.draw()
         if r.check_collision_circles(i.position, i.radius, player_pos, player_size):
-            player_direction += 180
+            player_velocity.x *= -1
+            player_velocity.y *= -1
     r.draw_circle_v(player_pos, player_size, player_color)
     r.draw_circle_v(
         r.vector2_subtract(

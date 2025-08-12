@@ -133,7 +133,7 @@ while not window_should_close():
     if is_mouse_button_down(MOUSE_BUTTON_LEFT):
         beedest = get_mouse_position()
 
-    if is_key_pressed(KEY_R):
+    if is_key_down(KEY_R):
         summon_entity(bee, bees)
     if is_key_down(KEY_F):
         summon_entity(mineral, minerals)

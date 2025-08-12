@@ -1,5 +1,6 @@
 from pyray import *
 
+set_config_flags(FLAG_WINDOW_UNDECORATED)
 
 class Entity:
     def __init__(
@@ -46,17 +47,16 @@ tree = Entity([], Vector2(0, 0), 0, Rectangle(45, 45, 10, 10), GREEN)
 player = Entity([], Vector2(0, 0), 2, Rectangle(5, 5, 5, 5), WHITE)
 
 while not window_should_close():
-    # player.x += player_direction.x * player_speed
-    # player.y += player_direction.y * player_speed
-
-    # if is_key_down(KEY_W):
-    #     player_direction.y = -1
-    # if is_key_down(KEY_S):
-    #     player_direction.y = 1
-    # else:
-    #     player_direction.y = 0
-
     player.control(KEY_W, KEY_S, KEY_A, KEY_D)
+
+    if player.rectangle.x > 95:
+        player.rectangle.x -= player.speed
+    if player.rectangle.y > 95:
+        player.rectangle.y -= player.speed
+    if player.rectangle.x < 0:
+        player.rectangle.x += player.speed
+    if player.rectangle.y < 0:
+        player.rectangle.y += player.speed
 
     begin_drawing()
     clear_background(BLACK)
